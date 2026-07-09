@@ -1,0 +1,46 @@
+using System.Collections.Generic;
+using System.Linq;
+
+public class StudentManager
+{
+    public List<Student> Students = new List<Student>();
+    public List<Course> Courses = new List<Course>();
+
+    public void AddStudent(Student s)
+    {
+        Students.Add(s);
+    }
+
+    public void AddCourse(Course c)
+    {
+        Courses.Add(c);
+    }
+
+    public Student FindStudent(int id)
+    {
+        return Students.FirstOrDefault(s => s.Id == id);
+    }
+
+    public Course FindCourse(int id)
+    {
+        return Courses.FirstOrDefault(c => c.Id == id);
+    }
+
+    public void AssignGrade(int studentId, int courseId, double score)
+    {
+        var student = FindStudent(studentId);
+        var course = FindCourse(courseId);
+
+        if (student != null && course != null)
+        {
+            student.AddGrade(new Grade(course, score));
+        }
+    }
+
+    public List<Student> SortByAverage()
+    {
+        // Sort students from highest to lowest average
+        return Students.OrderByDescending(s => s.GetAverage()).ToList();
+    }
+
+}
