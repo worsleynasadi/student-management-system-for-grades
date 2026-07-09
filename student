@@ -1,0 +1,29 @@
+using System.Collections.Generic;
+using System.Linq;
+
+public class Student
+{
+    public int Id;
+    public string Name;
+
+    public List<Grade> Grades = new List<Grade>();
+
+    public Student(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
+    public void AddGrade(Grade g)
+    {
+        Grades.Add(g);
+    }
+
+    public double GetAverage()
+    {
+        if (Grades.Count == 0)
+            return 0;
+
+        return Grades.Average(x => x.Score);
+    }
+}
