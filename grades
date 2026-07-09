@@ -1,1 +1,11 @@
+public class Grade
+{
+    public Course Course;
+    public double Score;
 
+    public Grade(Course course, double score)
+    {
+        Course = course;
+        Score = score;
+    }
+}
