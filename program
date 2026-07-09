@@ -1,1 +1,88 @@
+using System;
 
+StudentManager manager = new StudentManager();
+
+while (true)
+{
+    Console.WriteLine("\n--- Student Grade System ---");
+    Console.WriteLine("1. Add Student");
+    Console.WriteLine("2. Add Course");
+    Console.WriteLine("3. Assign Grade");
+    Console.WriteLine("4. Show Students");
+    Console.WriteLine("0. Exit");
+    Console.Write("Enter choice: ");
+    Console.WriteLine("5. Show Students Sorted by Average");
+    Console.WriteLine("6. Save Data");
+    Console.WriteLine("7. Load Data");
+
+
+
+    string choice = Console.ReadLine();
+
+    if (choice == "1")
+    {
+        Console.Write("Student Id: ");
+        int id = int.Parse(Console.ReadLine());
+        Console.Write("Student Name: ");
+        string name = Console.ReadLine();
+
+        manager.AddStudent(new Student(id, name));
+        Console.WriteLine("Student added!");
+    }
+    else if (choice == "2")
+    {
+        Console.Write("Course Id: ");
+        int id = int.Parse(Console.ReadLine());
+        Console.Write("Course Name: ");
+        string name = Console.ReadLine();
+
+        manager.AddCourse(new Course(id, name));
+        Console.WriteLine("Course added!");
+    }
+    else if (choice == "3")
+    {
+        Console.Write("Student Id: ");
+        int sid = int.Parse(Console.ReadLine());
+        Console.Write("Course Id: ");
+        int cid = int.Parse(Console.ReadLine());
+        Console.Write("Score: ");
+        double score = double.Parse(Console.ReadLine());
+
+        manager.AssignGrade(sid, cid, score);
+        Console.WriteLine("Grade assigned!");
+    }
+    else if (choice == "4")
+    {
+        foreach (var s in manager.Students)
+        {
+            Console.WriteLine($"{s.Id} {s.Name} - Average: {s.GetAverage()}");
+        }
+    }
+    else if (choice == "5")
+    {
+        var sorted = manager.SortByAverage();
+        foreach (var s in sorted)
+        {
+            Console.WriteLine($"{s.Id} {s.Name} - Average: {s.GetAverage()}");
+        }
+    }
+    else if (choice == "6")
+    {
+        FileService.Save(manager);
+        Console.WriteLine("Data saved to file!");
+    }
+    else if (choice == "7")
+    {
+        manager = FileService.Load();
+        Console.WriteLine("Data loaded from file!");
+    }
+
+    else if (choice == "0")
+    {
+        break;
+    }
+    else
+    {
+        Console.WriteLine("Invalid choice, try again.");
+    }
+}
